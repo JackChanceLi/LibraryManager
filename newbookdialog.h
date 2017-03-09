@@ -15,6 +15,9 @@ public:
     explicit NewBookDialog(QWidget *parent = 0);
     ~NewBookDialog();
 
+private slots:
+    void on_Button_save_quit_clicked();
+
 private:
     Ui::NewBookDialog *ui;
 };

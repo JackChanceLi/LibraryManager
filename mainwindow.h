@@ -16,10 +16,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+signals:
+    void require_newbook_dialog();
+
 private slots:
     void change_user_to_reader(QString str);
 
     void change_user_to_manager(QString str);
+
+    void open_newbook_dialog();
 
     void on_action_help_triggered();
 

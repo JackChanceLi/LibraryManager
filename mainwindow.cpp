@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "chsdialog.h"
+#include "newbookdialog.h"
 #include <QDesktopWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -15,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(dlg, SIGNAL(reader_return(QString)), this, SLOT(change_user_to_reader(QString)));
     connect(dlg, SIGNAL(manager_return(QString)), this, SLOT(change_user_to_manager(QString)));
     dlg->show();
+
+    connect(this, SIGNAL(require_newbook_dialog()), SLOT(open_newbook_dialog()));
     ui->setupUi(this);
 
 }
@@ -39,6 +42,13 @@ void MainWindow::change_user_to_manager(QString str)
     ui->return_button->setEnabled(false);
 }
 
+void MainWindow::open_newbook_dialog()
+{
+    NewBookDialog * dlg = new NewBookDialog(this);
+    dlg->setWindowModality(Qt::ApplicationModal);
+    dlg->show();
+}
+
 void MainWindow::on_action_help_triggered()
 {
     QString text = "本系统是模拟图书馆的借还/管理系统。请注意如果你的鼠标和键盘保持不动10秒钟，系统时间就会自动向前推进。";             //待补充
@@ -57,5 +67,5 @@ void MainWindow::on_borrow_button_clicked()
 
 void MainWindow::on_newbook_button_clicked()
 {
-
+    emit require_newbook_dialog();
 }
