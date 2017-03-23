@@ -16,9 +16,19 @@ public:
     explicit LoginDialog(QWidget *parent = 0);
     ~LoginDialog();
 
+signals:
+    void require_register_dialog();
+
+
 private slots:
 
-    void on_login_pushButton_clicked();
+    void on_login_pushButton_clicked();//登陆按钮
+
+    void on_user_account_activated(int index);
+
+    void on_register_pushButton_clicked();
+
+    void open_register_dialog();
 
 private:
     Ui::LoginDialog *ui;

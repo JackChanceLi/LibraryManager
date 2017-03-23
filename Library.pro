@@ -26,15 +26,28 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     logindialog.cpp \
-    chsdialog.cpp \
-    newbookdialog.cpp
+    newbookdialog.cpp \
+    borrowdialog.cpp \
+    searchdialog.cpp \
+    borrowsheetdialog.cpp \
+    register.cpp \
+    header.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
-    chsdialog.h \
-    newbookdialog.h
+    newbookdialog.h \
+    borrowdialog.h \
+    searchdialog.h \
+    borrowsheetdialog.h \
+    register.h \
+    header.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \
-    chsdialog.ui \
-    newbookdialog.ui
+    newbookdialog.ui \
+    borrowdialog.ui \
+    searchdialog.ui \
+    borrowsheetdialog.ui \
+    register.ui
+
+RESOURCES +=

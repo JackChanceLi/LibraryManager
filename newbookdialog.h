@@ -18,6 +18,8 @@ public:
 private slots:
     void on_Button_save_quit_clicked();
 
+    void on_Button_save_next_clicked();
+
 private:
     Ui::NewBookDialog *ui;
 };
