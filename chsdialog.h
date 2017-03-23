@@ -2,6 +2,7 @@
 #define CHSDIALOG_H
 
 #include <QDialog>
+#include <QCloseEvent>
 
 namespace Ui {
 class ChsDialog;

@@ -1,24 +1,33 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "chsdialog.h"
+#include "borrowdialog.h"
 #include "newbookdialog.h"
+#include "searchdialog.h"
 #include <QDesktopWidget>
+#include<QMessageBox>
+#include"logindialog.h"
+#include"header.h"
 
+extern UserBasic current_user;
+
+/**
+ * @brief MainWindow::MainWindow
+ * @param parent
+ * 主界面
+ */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
 
-    ChsDialog * dlg = new ChsDialog(this);
-    QDesktopWidget * desktop = QApplication::desktop();
-    dlg->move((desktop->width() - dlg->width())/2, (desktop->height() - dlg->height())/2); //设置窗口居中
-    dlg->setWindowModality(Qt::ApplicationModal); //设为关键窗口
-    connect(dlg, SIGNAL(reader_return(QString)), this, SLOT(change_user_to_reader(QString)));
-    connect(dlg, SIGNAL(manager_return(QString)), this, SLOT(change_user_to_manager(QString)));
-    dlg->show();
+    //绑定操作按钮的信号和槽
+    connect(this, &MainWindow::require_newbook_dialog, this, &MainWindow::open_newbook_dialog);
+    connect(this, &MainWindow::require_search_dialog, this, &MainWindow::open_search_dialog);
+    //展示主界面
 
-    connect(this, SIGNAL(require_newbook_dialog()), SLOT(open_newbook_dialog()));
     ui->setupUi(this);
+    ui->current_user->setText("当前用户："+current_user.username);
 
 }
 
@@ -27,24 +36,27 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::change_user_to_reader(QString str)
-{
-    ui->current_user->setText(str);
-    ui->newbook_button->setEnabled(false);
-    ui->findreader_button->setEnabled(false);
-    ui->journal_button->setEnabled(false);
-}
-
-void MainWindow::change_user_to_manager(QString str)
-{
-    ui->current_user->setText(str);
-    ui->borrow_button->setEnabled(false);
-    ui->return_button->setEnabled(false);
-}
-
+/**
+ * @brief MainWindow::open_newbook_dialog
+ * 打开新书注册对话界面
+ */
 void MainWindow::open_newbook_dialog()
 {
     NewBookDialog * dlg = new NewBookDialog(this);
+    dlg->setWindowTitle("新书入库");
+    dlg->setWindowModality(Qt::ApplicationModal);
+    dlg->show();
+}
+
+
+/**
+ * @brief MainWindow::open_search_dialog
+ * 打开显示搜索对话界面
+ */
+void MainWindow::open_search_dialog()
+{
+    SearchDialog * dlg = new SearchDialog(this);
+    dlg->setWindowTitle("图书检索");
     dlg->setWindowModality(Qt::ApplicationModal);
     dlg->show();
 }
@@ -57,15 +69,22 @@ void MainWindow::on_action_help_triggered()
 
 void MainWindow::on_action_exit_triggered()
 {
-    close();
-}
+    QMessageBox::warning(this,"警告","确定注销账户吗？",QMessageBox::Yes,QMessageBox::No);
 
-void MainWindow::on_borrow_button_clicked()
-{
 
 }
 
+
+/**
+ * @brief MainWindow::on_newbook_button_clicked
+ * 按钮click发送信号
+ */
 void MainWindow::on_newbook_button_clicked()
 {
     emit require_newbook_dialog();
+}
+
+void MainWindow::on_search_button_clicked()
+{
+    emit require_search_dialog();
 }

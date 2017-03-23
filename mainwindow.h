@@ -17,22 +17,24 @@ public:
     ~MainWindow();
 
 signals:
+
     void require_newbook_dialog();
 
-private slots:
-    void change_user_to_reader(QString str);
+    void require_search_dialog();
 
-    void change_user_to_manager(QString str);
+private slots:
 
     void open_newbook_dialog();
+
+    void open_search_dialog();
 
     void on_action_help_triggered();
 
     void on_action_exit_triggered();
 
-    void on_borrow_button_clicked();
-
     void on_newbook_button_clicked();
+
+    void on_search_button_clicked();
 
 private:
     Ui::MainWindow *ui;
